@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* 文章容器样式 */
+.article-container {
+    max-width: 800px; /* 限制最大宽度 */
+    margin: 2rem auto; /* 垂直方向间距和居中 */
+    padding: 2rem; /* 内部间距 */
+    background: #fff; /* 背景颜色 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* 简单的阴影效果 */
+  }
+  
+  /* 标题样式 */
+  .article-title {
+    font-size: 2rem; /* 字体大小 */
+    color: #333; /* 字体颜色 */
+    margin-bottom: 1rem; /* 下方间距 */
+  }
+  
+  /* 日期和描述文字样式 */
+  .article-meta {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* 下载按钮样式 */
+  .download-button {
+    background-color: #0056b3; /* 蓝色背景 */
+    color: #ffffff; /* 白色文字 */
+    padding: 10px 20px;
+    border-radius: 5px; /* 圆角 */
+    text-decoration: none; /* 去除下划线 */
+  }
+  
+  /* 标签样式 */
+  .tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 10px;
+  }
