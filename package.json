@@ -12,6 +12,7 @@
     "@mdx-js/loader": "^3.0.1",
     "@next/mdx": "^14.2.3",
     "gray-matter": "^4.0.3",
+    "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "next": "14.2.3",
     "next-mdx-remote": "^4.4.1",
@@ -22,6 +23,7 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
+    "@types/html2canvas": "^1.0.0",
     "@types/jspdf": "^2.0.0",
     "@types/node": "^20",
     "@types/pdfkit": "^0.13.4",
