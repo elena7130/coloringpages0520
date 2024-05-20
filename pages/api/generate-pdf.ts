@@ -22,16 +22,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     doc.image(imageBuffer, {
       fit: [590, 730], // 修改：调整高度以留出底部空间
       align: 'center',
-      valign: 'top'
+      valign: 'center'
     });
 
     // 新增：在底部添加域名文字
     doc.fontSize(12).text('https://www.dragon-coloringpages.com/', 0, 750, { align: 'center', width: 570 });
 
     doc.end();
-  } catch (error) {
-    res.status(500).json({ error: error.message || 'Something went wrong' });
+  } catch (error: unknown) {
+    const message = (error instanceof Error) ? error.message : 'Something went wrong';
+    res.status(500).json({ error: message });
   }
+  
 };
 
 export default handler;
