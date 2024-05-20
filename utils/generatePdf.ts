@@ -11,6 +11,6 @@ export const generatePdf = async (element: HTMLElement) => {
   const canvas = await html2canvas(element);
   const imgData = canvas.toDataURL('image/png');
   const pdf = new jsPDF();
-  pdf.addImage(imgData, 'PNG', 0, 0);
+  pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
   pdf.save('download.pdf');
 };
