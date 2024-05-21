@@ -28,6 +28,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         <meta name="keywords" content="dragon coloring pages, free coloring pages, printable coloring sheets, children coloring pages" />
         <meta name="author" content="Dragon Coloring Pages" />
         <link rel="icon" href="/favicon1.ico" type="image/x-icon" />
+        
         <script type="application/ld+json">
 {JSON.stringify({
     "@context": "http://schema.org",
