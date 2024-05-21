@@ -12,10 +12,13 @@ interface Post {
 
 export default async function sitemapXml(req: NextApiRequest, res: NextApiResponse) {
   const posts: Post[] = getAllPosts();
-  const baseUrl = {
-    development: 'http://localhost:3000', // 开发环境的URL
-    production: 'https://dragon-coloringpages.com', // 生产环境的URL，应根据实际情况更改
-  }[process.env.NODE_ENV] || 'https://dragon-coloringpages.com';
+  const environments = {
+    development: 'http://localhost:3000',
+    production: 'https://dragon-coloringpages.com',
+    test: 'http://localhost:3000' // 假设你有一个名为'test'的环境
+  };
+  const environment = process.env.NODE_ENV as keyof typeof environments;
+  const baseUrl = environments[environment] || 'https://dragon-coloringpages.com';
 
   const sitemap: string = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -32,4 +35,3 @@ ${posts.map(post => `
   res.write(sitemap);
   res.end();
 }
-
