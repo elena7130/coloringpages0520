@@ -7,6 +7,7 @@ import matter from 'gray-matter';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { slugify } from '../utils/slugify';
+import Head from 'next/head';
 import Image from 'next/image';
 
 interface PostProps {
@@ -40,27 +41,33 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
 
   return (
     <>
+      <Head>
+        <title>{frontMatter.title} - Dragon Coloring Pages</title>
+        <meta name="description" content={`Learn more about ${frontMatter.title} on our Dragon Coloring Pages.`} />
+      </Head>
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <article className="bg-white shadow-lg rounded-lg p-5 my-5">
-          <h1 className="text-2xl font-bold">{frontMatter.title}</h1>
-          <p className="text-gray-500">{new Date(frontMatter.date).toLocaleDateString()}</p>
-          <Image
-            src={frontMatter.image}
-            alt={frontMatter.title}
-            width={300}
-            height={200}
-            layout="intrinsic"
-          />
-          <MDXRemote {...source} />
+        <article className="bg-white shadow-lg rounded-lg p-5 my-5 pr-24" style={{ fontSize: '19px', lineHeight: '2.25' }}>
+          <h1 className="text-2xl font-bold mb-6">{frontMatter.title}</h1>
           <div className="flex flex-wrap gap-2 mt-4">
             {frontMatter.tags.map(tag => (
               <span key={tag} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">{tag}</span>
             ))}
           </div>
-          <button onClick={downloadPDF} className="mt-4 inline-block bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+          <p className="text-gray-500 mb-8 test-2xl">{new Date(frontMatter.date).toLocaleDateString()}</p>
+          <Image
+            src={frontMatter.image}
+            alt={`Coloring page for ${frontMatter.title}`}
+            width={400}
+            height={200}
+            layout="intrinsic"
+          />
+          <button onClick={downloadPDF} className="mt-4 inline-block bg-gradient-to-r from-pink-300 via-pink-400 to-cyan-300 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
             Download PDF
           </button>
+          <MDXRemote {...source} />
+
+ 
         </article>
       </main>
       <Footer />
@@ -93,7 +100,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   if (!matchedFile) {
-    console.error('Matched file not found for slug:', params?.slug); // Log error for better debugging
+    console.error('Matched file not found for slug:', params?.slug);
     return { notFound: true };
   }
 

@@ -3,7 +3,7 @@ import React from 'react';
 
 const PinterestIcon = () => {
     return (
-        <a href="'https://www.pinterest.com/quelena6/'" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.pinterest.com/Dragoncoloringpages/" target="_blank" rel="noopener noreferrer">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-8 md:w-6"

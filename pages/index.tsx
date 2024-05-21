@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getAllPosts } from '../utils/getAllPosts';
 
+
 interface HomeProps {
   posts: {
     slug: string;
@@ -22,9 +23,23 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
   return (
     <>
       <Head>
-        <title>Coloring Pages Website</title>
-        <meta name="dragon coloring pages" content="Free printable dragon coloring pages for all ages" />
+        <title>Dragon Coloring Pages Website | Free Printable Coloring Sheets</title>
+        <meta name="dragon coloring pages" content="Explore a world of dragons with our free printable dragon coloring pages. Suitable for children and adults alike." />
+        <meta name="keywords" content="dragon coloring pages, free coloring pages, printable coloring sheets, children coloring pages" />
+        <meta name="author" content="Dragon Coloring Pages" />
         <link rel="icon" href="/favicon1.ico" type="image/x-icon" />
+        <script type="application/ld+json">
+{JSON.stringify({
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.dragon-coloringpages.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.dragon-coloringpages.com/search?query={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+})}
+</script> 
       </Head>
       
       <Header />

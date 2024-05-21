@@ -3,7 +3,7 @@ import React from 'react';
 
 const TwitterIcon = () => {
     return (
-        <a href="/" target="_blank" rel="noopener noreferrer">
+        <a href="https://x.com/dragonli499857" target="_blank" rel="noopener noreferrer">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-8 md:w-6"
