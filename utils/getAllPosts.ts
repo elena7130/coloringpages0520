@@ -31,3 +31,5 @@ export const getAllPosts = (): Post[] => {
 
   return posts;
 };
+
+console.log("Posts data:", getAllPosts());

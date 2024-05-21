@@ -32,3 +32,4 @@ ${posts.map(post => `
   res.write(sitemap);
   res.end();
 }
+
