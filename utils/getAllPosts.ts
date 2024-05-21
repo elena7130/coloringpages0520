@@ -5,7 +5,7 @@ import { slugify } from './slugify';
 import { Post, FrontMatter } from '../types';  // 调整路径以正确导入
 
 export const getAllPosts = (): Post[] => {
-  const files = fs.readdirSync(path.join('content'));
+  const files = fs.readdirSync(path.join(process.cwd(), 'content')); // 确保路径是从项目根目录开始的
 
   const posts = files.map((filename): Post => {
     const markdownWithMeta = fs.readFileSync(path.join('content', filename), 'utf-8');
@@ -32,4 +32,7 @@ export const getAllPosts = (): Post[] => {
   return posts;
 };
 
-console.log("Posts data:", getAllPosts());
+// 仅在开发模式下打印日志
+if (process.env.NODE_ENV === 'development') {
+  console.log("Posts data:", getAllPosts());
+}
