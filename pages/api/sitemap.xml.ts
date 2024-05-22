@@ -1,5 +1,6 @@
-import { NextPage, GetServerSideProps } from 'next';
-import { getAllPosts } from '../utils/getAllPosts';
+// pages/api/sitemap.xml.ts
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getAllPosts } from '../../utils/getAllPosts';
 
 interface Post {
   slug: string;
@@ -9,17 +10,12 @@ interface Post {
   };
 }
 
-const Sitemap: NextPage<{ sitemap: string }> = ({ sitemap }) => {
-  return (
-    <div dangerouslySetInnerHTML={{ __html: sitemap }} />
-  );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
+export default async function sitemapXml(req: NextApiRequest, res: NextApiResponse) {
   const posts: Post[] = getAllPosts();
   const environments = {
     development: 'http://localhost:3000',
-    production: 'https://dragon-coloringpages.com'
+    production: 'https://dragon-coloringpages.com',
+    test: 'http://localhost:3000' // 假设你有一个名为'test'的环境
   };
   const environment = process.env.NODE_ENV as keyof typeof environments;
   const baseUrl = environments[environment] || 'https://dragon-coloringpages.com';
@@ -35,11 +31,7 @@ ${posts.map(post => `
 `).join('')}
 </urlset>`;
 
-  return {
-    props: {
-      sitemap
-    },
-  };
-};
-
-export default Sitemap;
+  res.setHeader('Content-Type', 'text/xml');
+  res.write(sitemap);
+  res.end();
+}
