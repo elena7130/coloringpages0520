@@ -23,9 +23,9 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
   return (
     <>
       <Head>
-        <title>Dragon Coloring Pages Website | Free Printable Coloring Sheets</title>
+        <title>Dragon Coloring Pages | Free Printable Coloring Sheets</title>
         <meta name="dragon coloring pages" content="Explore a world of dragons with our free printable dragon coloring pages. Suitable for children and adults alike." />
-        <meta name="keywords" content="dragon coloring pages, free coloring pages, printable coloring sheets, children coloring pages" />
+        <meta name="description" content="dragon coloring pages, free coloring pages, printable coloring sheets, children coloring pages" />
         <meta name="author" content="Dragon Coloring Pages" />
         <meta name="p:domain_verify" content="943448617fddeee563240c51a1978e56"/>
         <link rel="icon" href="/favicon1.ico" type="image/x-icon" />
