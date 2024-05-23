@@ -48,7 +48,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 
       <main className="container mx-auto px-4 py-2">
         <div className="text-center mx-auto mx-8 my-12 ">
-          <h1 className="text-3xl font-bold">Free Dragon Coloring Pages for Printable</h1>
+          <h1 className="text-3xl font-bold">Free Dragon Coloring Pages for Printable and Download</h1>
           <p className="py-4 px-16 mb-6" style={{ lineHeight: '1.75' }}>
             Welcome to your ultimate gateway to hours of engaging and creative fun Dragon Coloring Pages. 
             Our coloring page website is themed around dragons and offers two levels of difficulty: 
