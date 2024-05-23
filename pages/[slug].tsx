@@ -9,6 +9,9 @@ import Footer from '../components/Footer';
 import { slugify } from '../utils/slugify';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import ReadMore from '../components/ReadMore';  // 引入 ReadMore 组件
 
 interface PostProps {
   source: MDXRemoteSerializeResult;
@@ -20,7 +23,39 @@ interface PostProps {
   };
 }
 
+interface RelatedPage {
+  slug: string;
+  title: string;
+  // 如果需要添加更多属性，可以在这里添加
+}
+
 const PostPage = ({ source, frontMatter }: PostProps) => {
+  const [relatedPages, setRelatedPages] = useState<RelatedPage[]>([]);
+  const router = useRouter();
+  const { slug } = router.query;
+
+  const fetchRelatedPages = async (slug: string) => {
+    try {
+      const res = await fetch(`/api/related?slug=${slug}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch related pages');
+      }
+      const data: RelatedPage[] = await res.json();
+      console.log('Fetched related pages data:', data);  // 添加日志以查看获取的数据
+      setRelatedPages(data);
+    } catch (error) {
+      console.error("Error fetching related pages:", error);
+      setRelatedPages([]);
+    }
+  };
+
+  useEffect(() => {
+    if (slug) {
+      fetchRelatedPages(slug as string);
+    }
+  }, [slug]);
+
+
   // 用于下载PDF的函数
   const downloadPDF = async () => {
     const response = await fetch(`/api/generate-pdf?imageUrl=${encodeURIComponent(frontMatter.image)}`);
@@ -38,6 +73,7 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
       alert('Failed to download PDF');
     }
   };
+
 
   return (
     <>
@@ -66,9 +102,11 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
             Download PDF
           </button>
           <MDXRemote {...source} />
-
- 
         </article>
+
+        <ReadMore pages={relatedPages} /> {/* 使用 ReadMore 组件 */}
+
+        
       </main>
       <Footer />
     </>

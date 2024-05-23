@@ -20,7 +20,7 @@ export const getAllPosts = (): Post[] => {
       title: data.title,
       date: data.date,
       image: data.image,  // 确保类型正确
-      tags: data.tags,
+      tags: data.tags || [],  // 确保 tags 是一个数组，即使未定义
     };
 
     return {
