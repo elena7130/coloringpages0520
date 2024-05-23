@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import { getAllPosts } from '../../utils/getAllPosts';  // 确保路径正确
 
-export default function handler(req, res) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { slug } = req.query;
   console.log("API received slug:", slug);  // 日志输出接收到的slug
 
@@ -15,13 +16,23 @@ export default function handler(req, res) {
     return res.status(404).json({ message: "Post not found" });
   }
 
+  const currentPostTags = currentPost.frontMatter.tags;
+  if (!Array.isArray(currentPostTags)) {
+    console.log("Current post does not have tags:", slug);
+    return res.status(200).json([]);  // 如果当前帖子没有标签，返回空数组
+  }
+
   // 输出所有帖子的标签
   allPosts.forEach(post => {
     console.log(`Post slug: ${post.slug}, Tags: ${post.frontMatter.tags}`);
   });
 
   const relatedPosts = allPosts.filter(post => {
-    const hasMatchingTags = Array.isArray(post.frontMatter.tags) && post.frontMatter.tags.some(tag => currentPost.frontMatter.tags.includes(tag));
+    if (!Array.isArray(post.frontMatter.tags)) {
+      return false;
+    }
+
+    const hasMatchingTags = post.frontMatter.tags.some(tag => currentPostTags.includes(tag));
     console.log(`Checking post: ${post.slug}, hasMatchingTags: ${hasMatchingTags}`);
     return hasMatchingTags && post.slug !== slug;
   });
