@@ -25,8 +25,10 @@ interface PostProps {
 
 interface RelatedPage {
   slug: string;
-  title: string;
-  // 如果需要添加更多属性，可以在这里添加
+  frontMatter: {
+    title: string;
+    image: string;
+  };
 }
 
 const PostPage = ({ source, frontMatter }: PostProps) => {
