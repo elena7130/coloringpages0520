@@ -13,6 +13,11 @@ const nextConfig = {
         hostname: 'coloring-sav3-0520.s3.us-east-2.amazonaws.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',   // Adding the Ko-fi domain
+        hostname: 'storage.ko-fi.com',
+        pathname: '/**',
+      },
     ],
   },
   async redirects() {

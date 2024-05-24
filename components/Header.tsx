@@ -26,11 +26,12 @@ const Header = () => {
                     <PinterestIcon />
                      {/* 添加 Ko-fi 图片链接作为捐款按钮 */}
                      <Link href='https://ko-fi.com/F2F3Y68DI' target='_blank' rel="noopener noreferrer">
-                        <Image
-                            height='36'
-                            style={{ border: '0px', height: '36px' }}
+                        <img
+                            height='30'
+                            
+                            style={{ height: '50px', width: '180px', border: '0px' }}
                             src='https://storage.ko-fi.com/cdn/kofi2.png?v=3'
-                            alt='Buy Me a Coffee at ko-fi.com'
+                            alt='Buy Me a Coffee'
                         />
                     </Link>
                 </div>
