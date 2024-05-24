@@ -4,6 +4,7 @@ import Image from 'next/image';
 import TwitterIcon from './TwitterIcon';
 import PinterestIcon from './PinterestIcon';
 
+
 const Header = () => {
     return (
         <header className="bg-gradient-to-r from-pink-300 via-pink-400 to-cyan-300 text-black py-4">
@@ -23,6 +24,15 @@ const Header = () => {
                 <div className="flex items-center space-x-4">
                     <TwitterIcon />
                     <PinterestIcon />
+                     {/* 添加 Ko-fi 图片链接作为捐款按钮 */}
+                     <Link href='https://ko-fi.com/F2F3Y68DI' target='_blank' rel="noopener noreferrer">
+                        <Image
+                            height='36'
+                            style={{ border: '0px', height: '36px' }}
+                            src='https://storage.ko-fi.com/cdn/kofi2.png?v=3'
+                            alt='Buy Me a Coffee at ko-fi.com'
+                        />
+                    </Link>
                 </div>
             </div>
         </header>
