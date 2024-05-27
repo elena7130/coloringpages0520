@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /private/
 Allow: /
 
-Sitemap: https://dragon-coloringpages.com/sitemap.xml
+Sitemap: https://www.dragon-coloringpages.com/sitemap.xml
