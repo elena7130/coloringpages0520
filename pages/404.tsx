@@ -8,10 +8,10 @@ const Custom404 = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // 在2秒钟后重定向到主页
+    // 在8秒钟后重定向到主页
     const timer = setTimeout(() => {
       router.push('/');
-    }, 2000);
+    }, 8000);
 
     // 清除定时器
     return () => clearTimeout(timer);
