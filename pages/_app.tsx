@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const canonicalUrl = (`https://dragon-coloringpages.com` + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
+  const canonicalUrl = (`https://www.dragon-coloringpages.com` + (router.asPath === "/" ? "" : router.asPath)).split("?")[0];
 
 
   return (
