@@ -29,7 +29,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         <meta name="author" content="Dragon Coloring Pages" />
         <meta name="p:domain_verify" content="943448617fddeee563240c51a1978e56"/>
         <link rel="icon" href="/favicon1.ico" type="image/x-icon" />
-        
+        <link rel="canonical" href="https://www.dragon-coloringpages.com/" />
         <script type="application/ld+json">
 {JSON.stringify({
     "@context": "http://schema.org",
