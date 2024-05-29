@@ -53,7 +53,7 @@ const Header = () => {
             Free Coloring Pages
           </Link>
 
-  */}
+  
           <Link 
             href='/price' 
             aria-label="Price" 
@@ -62,7 +62,7 @@ const Header = () => {
             onMouseLeave={() => setIsHoveredPrice(false)}
           >
             Price
-          </Link>
+          </Link>*/}
         </div>
         <div className="flex items-center">
           <SignedIn>
