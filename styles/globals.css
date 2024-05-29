@@ -56,3 +56,17 @@
     font-weight: bold !important;
     font-size: 24px !important;
 }
+
+
+@keyframes colorShift {
+  0%, 100% {
+    background-color: #FF69B4; /* 粉红色 */
+  }
+  50% {
+    background-color: #32CD32; /* 亮绿色 */
+  }
+}
+
+.animated-color-button {
+  animation: colorShift 3s ease-in-out infinite;
+}

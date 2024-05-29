@@ -14,8 +14,13 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',   // Adding the Ko-fi domain
+        protocol: 'https',
         hostname: 'storage.ko-fi.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com', // 新增域名
         pathname: '/**',
       },
     ],

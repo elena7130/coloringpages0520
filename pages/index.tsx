@@ -66,7 +66,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           <p  className="font-bold">You&apos;re only a click away from stepping into a world of color.</p> {/* Change made here */}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-3 ">
           {posts.map(({ slug, frontMatter }) => (
             <Link  className="shadow rounded-lg p-4 text-center block hover:bg-pink-200" key={slug} href={`/${slug}`} passHref> {/* 包裹整个卡片 */}
                 <div className="flex justify-center">  

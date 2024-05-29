@@ -9,17 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.2.1",
+    "@clerk/nextjs": "^5.1.2",
     "@mdx-js/loader": "^3.0.1",
     "@next/mdx": "^14.2.3",
+    "@vercel/postgres": "^0.8.0",
+    "aws-sdk": "^2.1628.0",
+    "axios": "^1.7.2",
     "gray-matter": "^4.0.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
-    "next": "14.2.3",
+    "next": "^14.2.3",
     "next-mdx-remote": "^4.4.1",
     "node-fetch": "^3.3.2",
     "pdfkit": "^0.15.0",
     "react": "^18",
     "react-dom": "^18",
+    "replicate": "^0.30.0",
     "sharp": "^0.33.4"
   },
   "devDependencies": {

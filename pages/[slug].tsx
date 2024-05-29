@@ -57,7 +57,6 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
     }
   }, [slug]);
 
-
   // 用于下载PDF的函数
   const downloadPDF = async () => {
     const response = await fetch(`/api/generate-pdf?imageUrl=${encodeURIComponent(frontMatter.image)}`);
@@ -76,7 +75,6 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
     }
   };
 
-
   return (
     <>
       <Head>
@@ -87,7 +85,7 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
       <main className="container mx-auto px-4 py-8">
         <article className="bg-white shadow-lg rounded-lg p-5 my-5 pr-24" style={{ fontSize: '19px', lineHeight: '2.25' }}>
           <h1 className="text-2xl font-bold mb-6">{frontMatter.title}</h1>
-          <div className="flex flex-wrap gap-2 mt-4">
+          <div className="flex flex-wrap gap-2 mt-4 ">
             {frontMatter.tags.map(tag => (
               <span key={tag} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">{tag}</span>
             ))}
@@ -107,7 +105,6 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
         </article>
 
         <ReadMore pages={relatedPages} /> {/* 使用 ReadMore 组件 */}
-
         
       </main>
       <Footer />
@@ -127,33 +124,38 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const files = fs.readdirSync(path.join('content'));
-  let matchedFile = '';
+  try {
+    const files = fs.readdirSync(path.join('content'));
+    let matchedFile = '';
 
-  for (const filename of files) {
-    const markdownWithMeta = fs.readFileSync(path.join('content', filename), 'utf-8');
-    const { data: frontMatter } = matter(markdownWithMeta);
-    if (slugify(frontMatter.title) === params?.slug) {
-      matchedFile = filename;
-      break;
+    for (const filename of files) {
+      const markdownWithMeta = fs.readFileSync(path.join('content', filename), 'utf-8');
+      const { data: frontMatter } = matter(markdownWithMeta);
+      if (slugify(frontMatter.title) === params?.slug) {
+        matchedFile = filename;
+        break;
+      }
     }
-  }
 
-  if (!matchedFile) {
-    console.error('Matched file not found for slug:', params?.slug);
+    if (!matchedFile) {
+      console.error('Matched file not found for slug:', params?.slug);
+      return { notFound: true };
+    }
+
+    const markdownWithMeta = fs.readFileSync(path.join('content', matchedFile), 'utf-8');
+    const { data: frontMatter, content } = matter(markdownWithMeta);
+    const mdxSource = await serialize(content);
+
+    return {
+      props: {
+        source: mdxSource,
+        frontMatter
+      }
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps:', error);
     return { notFound: true };
   }
-
-  const markdownWithMeta = fs.readFileSync(path.join('content', matchedFile), 'utf-8');
-  const { data: frontMatter, content } = matter(markdownWithMeta);
-  const mdxSource = await serialize(content);
-
-  return {
-    props: {
-      source: mdxSource,
-      frontMatter
-    }
-  };
 };
 
 export default PostPage;
