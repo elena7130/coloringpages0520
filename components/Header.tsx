@@ -67,7 +67,7 @@ const Header = () => {
         <div className="flex items-center">
           <SignedIn>
             <div className="flex items-center space-x-4">
-              <p>Welcome, enjoy colorï¼</p>
+              <p>Welcome, enjoy color：</p>
               <span className="text-blue-500">{user?.fullName || user?.primaryEmailAddress?.emailAddress}</span>
               <button onClick={handleSignOut} className="text-lg font-semibold px-4 py-2">
                 Logout

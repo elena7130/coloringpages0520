@@ -20,7 +20,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com', // æ°å¢åå
+        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com', // 新增域名
         pathname: '/**',
       },
     ],
@@ -30,7 +30,7 @@ const nextConfig = {
       {
         source: '/sitemap.xml',
         destination: '/api/sitemap.xml',
-        permanent: true,  // å¦æä½ ç¡®è®¤è¿æ¯æ°¸ä¹æ§éå®åï¼å¦åå¯ä»¥è®¾ç½®ä¸ºfalse
+        permanent: true,  // 如果你确认这是永久性重定向，否则可以设置为false
       },
     ];
   },
