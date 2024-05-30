@@ -1,9 +1,9 @@
 // @ts-check
 import withMDX from '@next/mdx';
 
-/** @type {import('next').NextConfig}
- *  Extends NextConfig with redirects configuration
- */
+const isProduction = process.env.NODE_ENV === 'production';
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -26,12 +26,27 @@ const nextConfig = {
     ],
   },
   async redirects() {
+    if (isProduction) {
+      return [
+        {
+          source: '/sitemap.xml',
+          destination: '/api/sitemap.xml',
+          permanent: true,
+        },
+        {
+          source: '/',
+          destination: 'https://www.dragon-coloringpages.com/',
+          permanent: true,
+          basePath: false,
+        },
+      ];
+    }
     return [
       {
         source: '/sitemap.xml',
         destination: '/api/sitemap.xml',
-        permanent: true,  // 如果你确认这是永久性重定向，否则可以设置为false
-      },
+        permanent: true,
+      }
     ];
   },
 };

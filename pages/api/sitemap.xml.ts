@@ -14,11 +14,11 @@ export default async function sitemapXml(req: NextApiRequest, res: NextApiRespon
   const posts: Post[] = getAllPosts();
   const environments = {
     development: 'http://localhost:3000',
-    production: 'https://dragon-coloringpages.com',
+    production: 'https://www.dragon-coloringpages.com',
     test: 'http://localhost:3000' // 假设你有一个名为'test'的环境
   };
   const environment = process.env.NODE_ENV as keyof typeof environments;
-  const baseUrl = environments[environment] || 'https://dragon-coloringpages.com';
+  const baseUrl = environments[environment] || 'https://www.dragon-coloringpages.com';
 
   const sitemap: string = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
