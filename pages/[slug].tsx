@@ -94,9 +94,11 @@ const PostPage = ({ source, frontMatter }: PostProps) => {
           <Image
             src={frontMatter.image}
             alt={`Coloring page for ${frontMatter.title}`}
-            width={400}
+            width={350}
             height={200}
             layout="intrinsic"
+            quality={10} // 设置图像质量
+            loading="lazy" // 懒加载
           />
           <button onClick={downloadPDF} className="mt-4 inline-block bg-gradient-to-r from-pink-300 via-pink-400 to-cyan-300 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
             Download PDF
