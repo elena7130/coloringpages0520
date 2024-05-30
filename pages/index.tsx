@@ -28,7 +28,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         <meta name="description" content="dragon coloring pages, free coloring pages, printable coloring sheets, children coloring pages" />
         <meta name="author" content="Dragon Coloring Pages" />
         <meta name="p:domain_verify" content="943448617fddeee563240c51a1978e56"/>
-        <link rel="icon" href="/favicon1.ico" type="image/x-icon" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="canonical" href="https://www.dragon-coloringpages.com/" />
         <script type="application/ld+json">
 {JSON.stringify({
@@ -47,7 +47,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
       <Header />
 
       <main className="container mx-auto px-4 py-2">
-        <div className="text-center mx-auto mx-8 my-12 ">
+        <div className="text-cente mx-8 my-12 ">
           <h1 className="text-3xl font-bold">Free Dragon Coloring Pages for Printable and Download</h1>
           <p className="py-4 px-16 mb-6" style={{ lineHeight: '1.75' }}>
             Welcome to your ultimate gateway to hours of engaging and creative fun Dragon Coloring Pages. 

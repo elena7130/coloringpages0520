@@ -15,7 +15,7 @@ export default async function sitemapXml(req: NextApiRequest, res: NextApiRespon
   const environments = {
     development: 'http://localhost:3000',
     production: 'https://www.dragon-coloringpages.com',
-    test: 'http://localhost:3000' // 假设你有一个名为'test'的环境
+    test: 'http://localhost:3000' // åè®¾ä½ æä¸ä¸ªåä¸º'test'çç¯å¢
   };
   const environment = process.env.NODE_ENV as keyof typeof environments;
   const baseUrl = environments[environment] || 'https://www.dragon-coloringpages.com';

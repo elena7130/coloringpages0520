@@ -1,9 +1,9 @@
 // @ts-check
 import withMDX from '@next/mdx';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig}
+ *  Extends NextConfig with redirects configuration
+ */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -20,33 +20,18 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com', // 新增域名
+        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com', // æ°å¢åå
         pathname: '/**',
       },
     ],
   },
   async redirects() {
-    if (isProduction) {
-      return [
-        {
-          source: '/sitemap.xml',
-          destination: '/api/sitemap.xml',
-          permanent: true,
-        },
-        {
-          source: '/',
-          destination: 'https://www.dragon-coloringpages.com/',
-          permanent: true,
-          basePath: false,
-        },
-      ];
-    }
     return [
       {
         source: '/sitemap.xml',
         destination: '/api/sitemap.xml',
-        permanent: true,
-      }
+        permanent: true,  // å¦æä½ ç¡®è®¤è¿æ¯æ°¸ä¹æ§éå®åï¼å¦åå¯ä»¥è®¾ç½®ä¸ºfalse
+      },
     ];
   },
 };

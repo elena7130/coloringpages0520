@@ -29,8 +29,6 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "@types/html2canvas": "^1.0.0",
-    "@types/jspdf": "^2.0.0",
     "@types/node": "^20",
     "@types/pdfkit": "^0.13.4",
     "@types/react": "^18",

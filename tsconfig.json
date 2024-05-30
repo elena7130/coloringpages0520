@@ -19,7 +19,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./types"]  // 添加了这一行来包含你的自定义类型目录
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/ui/button.tsx"],
   "exclude": ["node_modules"]
