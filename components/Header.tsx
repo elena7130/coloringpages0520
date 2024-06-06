@@ -42,9 +42,18 @@ const Header = () => {
           >
             AI Coloring Pages Generator
           </Link>
+          <Link 
+            href='/gallery' 
+            aria-label="gallery" 
+            className={`text-lg font-semibold ${isHoveredFree ? 'text-gray-500' : ''}`}
+            onMouseEnter={() => setIsHoveredFree(true)}
+            onMouseLeave={() => setIsHoveredFree(false)}
+          >
+            Gallery
+          </Link>
           {/*
           <Link 
-            href='/free-coloring-pages' 
+            href='/[slug]' 
             aria-label="Free Coloring Pages" 
             className={`text-lg font-semibold ${isHoveredFree ? 'text-gray-500' : ''}`}
             onMouseEnter={() => setIsHoveredFree(true)}
