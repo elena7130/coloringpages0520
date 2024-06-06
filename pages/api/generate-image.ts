@@ -14,6 +14,9 @@ const s3 = new AWS.S3({
 
 const replicate = new Replicate({ auth: process.env.REPLICATE_API_TOKEN });
 
+// 设置函数的最大持续时间
+export const maxDuration = 60;
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
   if (!userId) {
