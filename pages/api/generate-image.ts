@@ -1,4 +1,3 @@
-// pages/api/generate-image.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getAuth } from '@clerk/nextjs/server';
 import Replicate from 'replicate';
@@ -48,6 +47,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     console.log("Generating image with input:", { prompt, negativePrompt });
+    
+    // 配置超时和重试策略
+    const axiosInstance = axios.create({
+      timeout: 15000 // 设置超时时间为15秒
+    });
+
+    axiosInstance.interceptors.response.use(null, async (error) => {
+      if (error.config && error.response && error.response.status >= 500) {
+        error.config.__retryCount = error.config.__retryCount || 0;
+        if (error.config.__retryCount < 3) {
+          error.config.__retryCount += 1;
+          console.log(`Retrying request (${error.config.__retryCount}/3)`);
+          return axiosInstance(error.config);
+        }
+      }
+      return Promise.reject(error);
+    });
+
     const input = {
       width: 896,
       height: 1344,
@@ -64,20 +81,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       num_inference_steps: 50
     };
 
+    // 记录生成图像开始时间
+    console.log("Image generation started at:", new Date().toISOString());
+
     const output = await replicate.run(
       "paappraiser/retro-coloring-book:cbaf592788a0513ff5ca3beecdc0d9280fb44908771656f2adef630a263d9ebe",
       { input }
     ) as string[];
+
+    // 记录生成图像完成时间
+    console.log("Image generation completed at:", new Date().toISOString());
 
     if (!output || output.length === 0) {
       return res.status(500).json({ error: 'Failed to generate image' });
     }
 
     const imageUrl = output[0];
-    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const response = await axiosInstance.get(imageUrl, { responseType: 'arraybuffer' });
     const buffer = Buffer.from(response.data, 'base64');
 
-    console.log("Uploading image to S3");
+    console.log("Uploading image to S3 started at:", new Date().toISOString());
     const s3Response = await s3.upload({
       Bucket: process.env.AWS_S3_BUCKET_NAME || '',
       Key: `images/${Date.now()}.png`,
@@ -85,15 +108,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ContentType: 'image/png'
     }).promise();
 
-    console.log("Image uploaded, saving metadata to database");
+    console.log("Image uploaded, saving metadata to database completed at:", new Date().toISOString());
     await sql`INSERT INTO images (url, description, created_at) VALUES (${s3Response.Location}, ${prompt}, NOW())`;
 
     // 更新用户的生成次数
     await sql`UPDATE user_generations SET remaining_generations = remaining_generations - 1 WHERE user_id = ${userId}`;
 
     res.status(200).json({ url: s3Response.Location });
-  } catch (error) {
-    console.error('Error generating image:', error);
-    res.status(500).json({ error: 'Error generating image', details: (error as Error).message });
+  } catch (error: any) {
+    // 记录错误发生时间
+    console.error('Error generating image at:', new Date().toISOString(), error.message);
+    res.status(500).json({ error: 'Error generating image', details: error.message });
   }
 }
