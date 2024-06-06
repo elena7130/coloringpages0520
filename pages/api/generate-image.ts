@@ -30,11 +30,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Prompt is required' });
   }
 
-  // 在 prompt 中增加 "coloring pages" 部分
   prompt = `${prompt} coloring pages`;
 
   try {
-    // 检查用户的生成次数
     let userGeneration = await sql`SELECT remaining_generations FROM user_generations WHERE user_id = ${userId}`;
     if (userGeneration.rows.length === 0) {
       await sql`INSERT INTO user_generations (user_id, remaining_generations) VALUES (${userId}, 3)`;
@@ -47,24 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     console.log("Generating image with input:", { prompt, negativePrompt });
-    
-    // 配置超时和重试策略
-    const axiosInstance = axios.create({
-      timeout: 15000 // 设置超时时间为15秒
-    });
-
-    axiosInstance.interceptors.response.use(null, async (error) => {
-      if (error.config && error.response && error.response.status >= 500) {
-        error.config.__retryCount = error.config.__retryCount || 0;
-        if (error.config.__retryCount < 3) {
-          error.config.__retryCount += 1;
-          console.log(`Retrying request (${error.config.__retryCount}/3)`);
-          return axiosInstance(error.config);
-        }
-      }
-      return Promise.reject(error);
-    });
-
     const input = {
       width: 896,
       height: 1344,
@@ -81,43 +61,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       num_inference_steps: 50
     };
 
-    // 记录生成图像开始时间
-    console.log("Image generation started at:", new Date().toISOString());
-
     const output = await replicate.run(
       "paappraiser/retro-coloring-book:cbaf592788a0513ff5ca3beecdc0d9280fb44908771656f2adef630a263d9ebe",
       { input }
     ) as string[];
-
-    // 记录生成图像完成时间
-    console.log("Image generation completed at:", new Date().toISOString());
 
     if (!output || output.length === 0) {
       return res.status(500).json({ error: 'Failed to generate image' });
     }
 
     const imageUrl = output[0];
-    const response = await axiosInstance.get(imageUrl, { responseType: 'arraybuffer' });
-    const buffer = Buffer.from(response.data, 'base64');
+    console.log('Generated image URL:', imageUrl);
 
-    console.log("Uploading image to S3 started at:", new Date().toISOString());
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const buffer = Buffer.from(response.data, 'binary'); // 确保使用正确的编码转换
+
+    // 验证是否为有效的 PNG 文件
+    const isPng = buffer.toString('hex', 0, 8) === '89504e470d0a1a0a';
+    if (!isPng) {
+      console.error('Downloaded file is not a valid PNG image.');
+      return res.status(500).json({ error: 'The generated file is not a valid PNG image.' });
+    }
+
+    console.log("Uploading image to S3");
+
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const uniqueIdentifier = `${Date.now()}.png`;
+
+    const s3Key = `${year}/${month}/${day}/${uniqueIdentifier}`;
+
     const s3Response = await s3.upload({
       Bucket: process.env.AWS_S3_BUCKET_NAME || '',
-      Key: `images/${Date.now()}.png`,
+      Key: s3Key,
       Body: buffer,
       ContentType: 'image/png'
     }).promise();
 
-    console.log("Image uploaded, saving metadata to database completed at:", new Date().toISOString());
+    console.log("Image uploaded, saving metadata to database");
     await sql`INSERT INTO images (url, description, created_at) VALUES (${s3Response.Location}, ${prompt}, NOW())`;
 
-    // 更新用户的生成次数
     await sql`UPDATE user_generations SET remaining_generations = remaining_generations - 1 WHERE user_id = ${userId}`;
 
     res.status(200).json({ url: s3Response.Location });
   } catch (error: any) {
-    // 记录错误发生时间
-    console.error('Error generating image at:', new Date().toISOString(), error.message);
+    console.error('Error generating image:', error);
     res.status(500).json({ error: 'Error generating image', details: error.message });
   }
 }
