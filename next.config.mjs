@@ -1,9 +1,7 @@
 // @ts-check
 import withMDX from '@next/mdx';
 
-/** @type {import('next').NextConfig}
- *  Extends NextConfig with redirects configuration
- */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -20,7 +18,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com', // 新增域名
+        hostname: 'test-aicolor-0426.s3.us-east-2.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'replicate.delivery', // 新增域名
         pathname: '/**',
       },
     ],
@@ -30,14 +33,14 @@ const nextConfig = {
       {
         source: '/sitemap.xml',
         destination: '/api/sitemap.xml',
-        permanent: true,  // 如果你确认这是永久性重定向，否则可以设置为false
+        permanent: true,
       },
     ];
   },
 };
 
 const withMDXConfig = withMDX({
-  extension: /\.mdx?$/
+  extension: /\.mdx?$/,
 });
 
 export default withMDXConfig(nextConfig);
