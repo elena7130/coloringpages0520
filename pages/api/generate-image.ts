@@ -1,4 +1,5 @@
-// pages/api/generate-image.ts
+export const maxDuration = 60; // 将最大执行时间设置为 60 秒
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getAuth } from '@clerk/nextjs/server';
 import Replicate from 'replicate';
@@ -14,8 +15,6 @@ const s3 = new AWS.S3({
 });
 
 const replicate = new Replicate({ auth: process.env.REPLICATE_API_TOKEN });
-
-export const maxDuration = 60; // 设置最大持续时间为60秒
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = getAuth(req);
@@ -36,6 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   prompt = `${prompt} Coloring book vintage minimal lines easy to color`;
 
   try {
+    // 检查用户的生成次数
     let userGeneration = await sql`SELECT remaining_generations FROM user_generations WHERE user_id = ${userId}`;
     if (userGeneration.rows.length === 0) {
       await sql`INSERT INTO user_generations (user_id, remaining_generations) VALUES (${userId}, 3)`;
@@ -49,11 +49,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // 记录开始时间
     const startTime = performance.now();
-
     console.log("Generating image with input:", { prompt });
+
     const input = {
-      width: 512, // 调整图像大小
-      height: 768,
+      width: 384,
+      height: 576,
       prompt: prompt,
       refine: "no_refiner",
       scheduler: "K_EULER",
@@ -62,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       guidance_scale: 7.5,
       apply_watermark: true,
       high_noise_frac: 0.8,
-      negative_prompt: negativePrompt || "complex, realistic, color, gradient",
+      negative_prompt: "complex, realistic, color, gradient ",
       prompt_strength: 0.8,
       num_inference_steps: 50
     };
