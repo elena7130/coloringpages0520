@@ -28,13 +28,15 @@
     "react": "^18",
     "react-dom": "^18",
     "replicate": "^0.30.0",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/pdfkit": "^0.13.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/winston": "^2.4.4",
     "autoprefixer": "^10.4.19",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
