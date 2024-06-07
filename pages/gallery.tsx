@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header'; // 你的头部组件路径
+import Header from '../components/Header'; // 确保这是你的头部组件的正确路径
 import Image from 'next/image'; // 引入 Image 组件
 import Head from 'next/head'; // 引入 Head 组件
 import { GetServerSideProps } from 'next'; // 导入 GetServerSideProps 类型
@@ -17,8 +17,8 @@ interface GalleryProps {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    // 调用API获取图像数据
-    const res = await fetch('http://localhost:3000/api/get-images');
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 使用环境变量
+    const res = await fetch(`${apiUrl}/api/get-images`);
     if (!res.ok) {
       throw new Error(`Failed to fetch, received status ${res.status}`);
     }
@@ -33,9 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: { images },
     };
   } catch (error) {
-    // 在开发中打印错误到控制台
     console.error('Failed to load images:', error);
-    // 返回空数组避免页面错误
     return {
       props: { images: [] },
     };
@@ -83,7 +81,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
               <div className="p-4">
                 <p className="text-sm text-gray-700">{img.description}</p>
                 <a
-                  href={`http://localhost:3000/api/generate-pdf?imageUrl=${encodeURIComponent(img.url)}`}
+                  href={`${process.env.NEXT_PUBLIC_API_URL}/api/generate-pdf?imageUrl=${encodeURIComponent(img.url)}`}
                   download={`Image-${index}.pdf`}
                   className="font-bold underline hover:text-blue-700 transition-colors"
                 >
