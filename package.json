@@ -13,6 +13,7 @@
     "@clerk/nextjs": "^5.1.4",
     "@mdx-js/loader": "^3.0.1",
     "@next/mdx": "^14.2.3",
+    "@types/pg": "^8.11.6",
     "@vercel/postgres": "^0.8.0",
     "aws-sdk": "^2.1635.0",
     "axios": "^1.7.2",
