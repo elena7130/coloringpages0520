@@ -44,12 +44,12 @@ const Header = () => {
           </Link>
           <Link 
             href='/gallery' 
-            aria-label="gallery" 
+            aria-label="explore" 
             className={`text-lg font-semibold ${isHoveredFree ? 'text-gray-500' : ''}`}
             onMouseEnter={() => setIsHoveredFree(true)}
             onMouseLeave={() => setIsHoveredFree(false)}
           >
-            Gallery
+            Explore
           </Link>
           {/*
           <Link 
