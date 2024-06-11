@@ -3,6 +3,7 @@ import Header from '../components/Header'; // 确保这是你的头部组件的�
 import Image from 'next/image'; // 引入 Image 组件
 import Head from 'next/head'; // 引入 Head 组件
 import { GetServerSideProps } from 'next'; // 导入 GetServerSideProps 类型
+import pool from '../lib/db'; // 导入数据库连接
 
 interface ImageData {
   id: string;
@@ -17,17 +18,13 @@ interface GalleryProps {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 使用环境变量
-    const res = await fetch(`${apiUrl}/api/get-images`);
-    if (!res.ok) {
-      throw new Error(`Failed to fetch, received status ${res.status}`);
-    }
-    const images: ImageData[] = await res.json();
-
-    // 确保返回的是数组
-    if (!Array.isArray(images)) {
-      throw new Error("Expected an array of images, but did not receive one.");
-    }
+    const client = await pool.connect();
+    const res = await client.query('SELECT id, url, description, created_at FROM images');
+    const images = res.rows.map((image: any) => ({
+      ...image,
+      created_at: image.created_at.toISOString(), // 将 Date 对象转换为 ISO 字符串
+    }));
+    client.release();
 
     return {
       props: { images },
