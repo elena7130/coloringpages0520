@@ -2,3 +2,7 @@
 {"level":"info","message":"Generated image URL:"}
 {"level":"info","message":"Image generation completed in 9341.77 ms"}
 {"level":"error","message":"Error during S3 upload: Cannot create property 'Symbol(level)' on string 'Uploading image to S3'","stack":"TypeError: Cannot create property 'Symbol(level)' on string 'Uploading image to S3'\n    at DerivedLogger.log (D:\\codequ\\recat-test-0517\\node_modules\\winston\\lib\\winston\\logger.js:214:20)\n    at eval (webpack-internal:///(api)/./pages/api/generate-image.ts:133:71)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"info","message":"Generating image with input:","prompt":"a cute dragon eat ice cream  black and white coloring page"}
+{"level":"info","message":"Generated image URL:"}
+{"level":"info","message":"Image generation completed in 9254.86 ms"}
+{"level":"info","message":"Uploading image to S3"}

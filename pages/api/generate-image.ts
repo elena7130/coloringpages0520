@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Prompt is required' });
   }
 
-  prompt = `${prompt} Coloring book vintage minimal lines easy to color`;
+  prompt = `${prompt}  black and white coloring page`;
   
 
   try {
@@ -70,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     logger.info("Generating image with input:", { prompt });
 
     const input = {
-      width: 384,
+      width:  384,
       height: 576,
       prompt: prompt,
       refine: "no_refiner",
@@ -86,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     const output = await replicate.run(
-      "paappraiser/retro-coloring-book:cbaf592788a0513ff5ca3beecdc0d9280fb44908771656f2adef630a263d9ebe",
+      "pnickolas1/sdxl-coloringbook:d2b110483fdce03119b21786d823f10bb3f5a7c49a7429da784c5017df096d33",
       { input }
     ) as string[];
 
