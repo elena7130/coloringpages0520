@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getAllPosts } from '../utils/getAllPosts';
 import HeroSection from '../components/HeroSection';
+import CategorySection from '../components/CategorySection';
 
 
 interface HomeProps {
@@ -68,17 +69,18 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           from mythical dragons, cartoon dragons, dragons in nature, seasons, and much more.</p>
           <p  className="font-bold">You&apos;re only a click away from stepping into a world of color.</p> {/* Change made here */}
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-3 ">
+        <CategorySection title="Dragon Coloring Pages by Tags" posts={posts} />
+     
+        { /*<div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-3 ">
           {posts.map(({ slug, frontMatter }) => (
-            <Link  className="shadow rounded-lg p-4 text-center block hover:bg-pink-200" key={slug} href={`/${slug}`} passHref> {/* 包裹整个卡片 */}
+            <Link  className="shadow rounded-lg p-4 text-center block hover:bg-pink-200" key={slug} href={`/${slug}`} passHref> {/* 包裹整个卡片 
                 <div className="flex justify-center">  
                 <Image src={frontMatter.image} alt={frontMatter.title} width={300} height={400}  style={{ objectFit: 'cover' } }/>
                 </div>
                 <h2 className="font-bold mt-2">{frontMatter.title}</h2>
-            </Link>
+            </Link> 
           ))}
-        </div>
+        </div> */}
 
         <h2 className="text-2xl font-bold mt-6 text-center">Ultimate Guide to Leveraging Dragon Coloring Pages for Creative Endeavors 🐉✨</h2>
       <p >Welcome to the fascinating world of dragon coloring pages! 
